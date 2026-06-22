@@ -1,0 +1,28 @@
+﻿<Application x:Class="ScadaGUI.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:ScadaGUI" xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <!-- Glavni Material Design resursi -->
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesign3.Defaults.xaml" />
+
+                <!-- Inicijalna postavka teme (Podrazumevano Dark/Tamna za Yokogawa izgled) -->
+                <materialDesign:BundledTheme BaseTheme="Dark" 
+                                             PrimaryColor="Grey" 
+                                             SecondaryColor="Green" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <!-- Custom Yokogawa Stilovi za celu aplikaciju -->
+            <!-- Duboka crna pozadina za prozore -->
+            <SolidColorBrush x:Key="YokogawaBackground" Color="#FF111111" />
+            <!-- Boje za SCADA stanja -->
+            <SolidColorBrush x:Key="YokogawaGreen" Color="#FF00FF00" />
+            <SolidColorBrush x:Key="YokogawaRed" Color="#FFFF0000" />
+            <SolidColorBrush x:Key="YokogawaGrey" Color="#FF888888" />
+            <SolidColorBrush x:Key="YokogawaText" Color="#FFFFFFFF" />
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

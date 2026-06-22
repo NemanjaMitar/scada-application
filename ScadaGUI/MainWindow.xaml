@@ -1,0 +1,61 @@
+﻿<Window x:Class="ScadaGUI.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:local="clr-namespace:ScadaGUI"
+        mc:Ignorable="d"
+        Title="SCADA Application" Height="450" Width="800" 
+        Closing="Window_Closing">
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <!-- Gornja traka sa dugmetom za temu -->
+            <RowDefinition Height="*"/>
+            <!-- SCADA Sadržaj -->
+        </Grid.RowDefinitions>
+
+        <!-- Gornji panel sa kontrolama -->
+        <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,0,20">
+            <!-- Material Design dugme za promenu teme (Light/Dark) -->
+            <Button x:Name="BtnToggleTheme" 
+        Content="Promeni Temu (Light/Dark)" 
+        Click="BtnToggleTheme_Click"
+        Background="{StaticResource YokogawaGrey}"
+        BorderBrush="{StaticResource YokogawaGrey}"/>
+        </StackPanel>
+
+        <!-- Primer SCADA UI elemenata (Yokogawa stil) -->
+        <StackPanel Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" Width="400">
+            <Button Content="DODAJ NOVI TAG" 
+                    Click="AddButton_Click" 
+                    Background="{StaticResource YokogawaGreen}" 
+                    BorderBrush="{StaticResource YokogawaGreen}"
+                    Foreground="Black" FontWeight="Bold" Height="45" Margin="0,0,0,20"/>
+
+            <!-- Simulacija alarma i stanja -->
+            <Border BorderBrush="{StaticResource YokogawaGrey}" BorderThickness="1" Padding="15" Background="#121212">
+                <StackPanel>
+                    <TextBlock Text="SISTEMSKIALARMI" FontSize="14" FontWeight="Bold" Foreground="{StaticResource YokogawaRed}" Margin="0,0,0,10"/>
+
+                    <Grid Margin="0,5">
+                        <TextBlock Text="Merenje Pritiska (AI_01):" HorizontalAlignment="Left" Foreground="{StaticResource YokogawaText}"/>
+                        <TextBlock Text="CRITICAL HIGH" HorizontalAlignment="Right" Foreground="{StaticResource YokogawaRed}" FontWeight="Bold"/>
+                    </Grid>
+
+                    <Grid Margin="0,5">
+                        <TextBlock Text="Protok Ventila (AO_02):" HorizontalAlignment="Left" Foreground="{StaticResource YokogawaText}"/>
+                        <TextBlock Text="75.4 %" HorizontalAlignment="Right" Foreground="{StaticResource YokogawaText}"/>
+                    </Grid>
+
+                    <Grid Margin="0,5">
+                        <TextBlock Text="Glavni Motor (DI_01):" HorizontalAlignment="Left"  Foreground="{StaticResource YokogawaText}"/>
+                        <TextBlock Text="RUNNING" HorizontalAlignment="Right" Foreground="{StaticResource YokogawaGreen}" FontWeight="Bold"/>
+                    </Grid>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </Grid>
+
+</Window>
