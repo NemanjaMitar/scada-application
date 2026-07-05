@@ -7,10 +7,23 @@ using System.Threading.Tasks;
 
 namespace DataConcentrator.Model
 {
-    public class DigitalInput : Tag, IInputTags 
+    public class DigitalInput : Tag, IInputTags
     {
+        private TimeSpan scanTime;
+        private bool isOnScan;
+
         public override ETagType Type => ETagType.DI;
-        public TimeSpan ScanTime => ScanTime;
-        public bool IsOnScan => IsOnScan;
+
+        public TimeSpan ScanTime
+        {
+            get => scanTime;
+            set => scanTime = value;
+        }
+
+        public bool IsOnScan
+        {
+            get => isOnScan;
+            set => isOnScan = value;
+        }
     }
 }

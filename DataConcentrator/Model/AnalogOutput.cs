@@ -9,7 +9,14 @@ namespace DataConcentrator.Model
 {
     public class AnalogOutput : Tag, IOutputTags
     {
-        public double InitValue => InitValue;
+        private double initValue;
+
+        public double InitValue
+        {
+            get => initValue;
+            set => initValue = value;
+        }
+
         public override ETagType Type => ETagType.AO;
     }
 }
