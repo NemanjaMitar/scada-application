@@ -9,8 +9,21 @@ namespace DataConcentrator.Model
 {
     public class AnalogInput : Tag, IInputTags
     {
-        public TimeSpan ScanTime => ScanTime;
-        public bool IsOnScan => IsOnScan; 
+        private TimeSpan scanTime;
+        private bool isOnScan;
+
+        public TimeSpan ScanTime
+        {
+            get => scanTime;
+            set => scanTime = value;
+        }
+
+        public bool IsOnScan
+        {
+            get => isOnScan;
+            set => isOnScan = value;
+        }
+
         public double LowLimit { get; }
         public double HighLimit { get; }
         public string Units { get; }

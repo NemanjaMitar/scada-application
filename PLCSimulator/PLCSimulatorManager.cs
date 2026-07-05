@@ -21,41 +21,49 @@ namespace PLCSimulator
         private object locker = new object();
         private Thread t1;
         private Thread t2;
-        
+        private CancellationTokenSource cts;
+
         public PLCSimulatorManager()
         {
             addressValues = new Dictionary<string, double>();
 
-            // TODO: dodati adrese
             // AI
             addressValues.Add("ADDR001", 0);
+            addressValues.Add("ADDR002", 0);
+            addressValues.Add("ADDR003", 0);
+            addressValues.Add("ADDR004", 0);
 
             // AO
             addressValues.Add("ADDR005", 0);
 
             // DI
             addressValues.Add("ADDR009", 0);
+            addressValues.Add("ADDR011", 0);
+            addressValues.Add("ADDR012", 0);
+            addressValues.Add("ADDR013", 0);
 
             // DO
             addressValues.Add("ADDR010", 0);
- 
+
         }
 
         public void StartPLCSimulator()
         {
-            t1 = new Thread(GeneratingAnalogInputs);
+            cts = new CancellationTokenSource();
+
+            t1 = new Thread(() => GeneratingAnalogInputs(cts.Token));
             t1.Start();
 
-            t2 = new Thread(GeneratingDigitalInputs);
+            t2 = new Thread(() => GeneratingDigitalInputs(cts.Token));
             t2.Start();
         }
 
-        private void GeneratingAnalogInputs()
+        private void GeneratingAnalogInputs(CancellationToken token)
         {
-            while (true)
+            while (!token.IsCancellationRequested)
             {
-                
-                Thread.Sleep(100);
+                if (token.WaitHandle.WaitOne(100))
+                    break;
 
                 lock (locker)
                 {
@@ -67,11 +75,12 @@ namespace PLCSimulator
             }
         }
 
-        private void GeneratingDigitalInputs()
+        private void GeneratingDigitalInputs(CancellationToken token)
         {
-            while (true)
+            while (!token.IsCancellationRequested)
             {
-                Thread.Sleep(1000);
+                if (token.WaitHandle.WaitOne(1000))
+                    break;
 
                 lock (locker)
                 {
@@ -153,8 +162,9 @@ namespace PLCSimulator
 
         public void Abort()
         {
-            t1.Abort();
-            t2.Abort();
+            cts?.Cancel();
+            t1?.Join();
+            t2?.Join();
         }
     }
 }

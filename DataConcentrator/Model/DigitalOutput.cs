@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DataConcentrator.Utils;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,14 @@ namespace DataConcentrator.Model
 {
     public class DigitalOutput : Tag, IOutputTags
     {
-        public double InitValue => InitValue;
+        private double initValue;
+
+        public double InitValue
+        {
+            get => initValue;
+            set => initValue = value;
+        }
+
+        public override ETagType Type => ETagType.DO;
     }
 }
