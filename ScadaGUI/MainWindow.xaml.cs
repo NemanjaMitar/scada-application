@@ -45,8 +45,9 @@ namespace ScadaGUI
             _inactivityTimer.Tick += InactivityTimer_Tick;
             _inactivityTimer.Start();
 
-            // Prati globalne događaje u prozoru za resetovanje tajmera
-            this.MouseMove += ResetTimerOnActivity;
+            // Prati samo namerne akcije (klik/kucanje) - MouseMove je namjerno izostavljen
+            // jer se okida i pri običnom prelasku kursora preko (nefokusiranog) prozora,
+            // što je tiho resetovalo tajmer i sprečavalo auto-logout da se ikad desi.
             this.KeyDown += ResetTimerOnActivity;
             this.MouseDown += ResetTimerOnActivity;
         }
