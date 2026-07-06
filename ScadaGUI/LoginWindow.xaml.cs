@@ -79,10 +79,11 @@ namespace ScadaGUI
 
         private bool ValidatePassword(string password)
         {
-            if (string.IsNullOrEmpty(password) || password.Length != 15) return false;
-            if (!password.Any(char.IsUpper)) return false;
-            if (!password.Any(char.IsLower)) return false;
-            // Provjera za specijalni karakter (sve što nije slovo ili broj)
+            if (string.IsNullOrEmpty(password) || password.Length < 15) return false;
+
+            if (!password.Any(char.IsUpper)) return false; // Provera velikog slova
+            if (!password.Any(char.IsLower)) return false; // Provera malog slova
+                                                           // Provera za specijalni karakter (sve što nije slovo ili broj)
             if (!password.Any(ch => !char.IsLetterOrDigit(ch))) return false;
 
             return true;
