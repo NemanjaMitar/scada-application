@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
 using DataConcentrator.Model;
+using MaterialDesignThemes.Wpf;
 using ScadaGUI.Services;
 
 namespace ScadaGUI
@@ -77,8 +78,18 @@ namespace ScadaGUI
             Logger.Log($"Korisnik '{_currentUser?.Username}' je zatvorio aplikaciju.");
         }
 
+        private void BtnToggleTheme_Click(object sender, RoutedEventArgs e)
+        {
+            var paletteHelper = new PaletteHelper();
+            Theme theme = paletteHelper.GetTheme();
+
+            bool isDark = theme.GetBaseTheme() == BaseTheme.Dark;
+            theme.SetBaseTheme(isDark ? BaseTheme.Light : BaseTheme.Dark);
+
+            paletteHelper.SetTheme(theme);
+        }
+
         // Ostale postojeće metode ostaju netaknute...
-        private void BtnToggleTheme_Click(object sender, RoutedEventArgs e) { /* ... */ }
         private void AddButton_Click(object sender, RoutedEventArgs e) { /* ... */ }
     }
 }
