@@ -7,13 +7,13 @@ namespace DataConcentrator.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.4")]
-    public sealed partial class AddAlarmAndActivatedAlarmTables : IMigrationMetadata
+    public sealed partial class InitialCreate : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(AddAlarmAndActivatedAlarmTables));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(InitialCreate));
         
         string IMigrationMetadata.Id
         {
-            get { return "202607051244448_AddAlarmAndActivatedAlarmTables"; }
+            get { return "202607061016396_InitialCreate"; }
         }
         
         string IMigrationMetadata.Source

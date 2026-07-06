@@ -1,0 +1,25 @@
+﻿<Window x:Class="ScadaGUI.LoginWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Login - SCADA System" Height="350" Width="300" WindowStartupLocation="CenterScreen">
+    <StackPanel Margin="20" VerticalAlignment="Center">
+        <TextBlock Text="SCADA LOGIN" FontSize="20" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,0,0,20"/>
+
+        <TextBlock Text="Korisničko ime:"/>
+        <TextBox x:Name="TxtUsername" Margin="0,0,0,10"/>
+
+        <TextBlock Text="Lozinka:"/>
+        <PasswordBox x:Name="TxtPassword" Margin="0,0,0,10"/>
+
+        <TextBlock Text="Uloga (Samo za registraciju):"/>
+        <ComboBox x:Name="CmbRole" Margin="0,0,0,20">
+            <ComboBoxItem Content="Admin" IsSelected="True"/>
+            <ComboBoxItem Content="Operater"/>
+            <ComboBoxItem Content="Student"/>
+            <ComboBoxItem Content="Teacher"/>
+        </ComboBox>
+
+        <Button Content="Prijava" Click="BtnLogin_Click" Margin="0,0,0,10" Background="CornflowerBlue" Foreground="White" FontWeight="Bold"/>
+        <Button Content="Registracija (Prvi put)" Click="BtnRegister_Click" Background="LightGray"/>
+    </StackPanel>
+</Window>

@@ -28,11 +28,12 @@
 
         <!-- Primer SCADA UI elemenata (Yokogawa stil) -->
         <StackPanel Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" Width="400">
-            <Button Content="DODAJ NOVI TAG" 
-                    Click="AddButton_Click" 
-                    Background="{StaticResource YokogawaGreen}" 
-                    BorderBrush="{StaticResource YokogawaGreen}"
-                    Foreground="Black" FontWeight="Bold" Height="45" Margin="0,0,0,20"/>
+            <Button x:Name="BtnAddTag" 
+                        Content="DODAJ NOVI TAG" 
+                        Click="AddButton_Click" 
+                        Background="{StaticResource YokogawaGreen}" 
+                        BorderBrush="{StaticResource YokogawaGreen}"
+                        Foreground="Black" FontWeight="Bold" Height="45" Margin="0,0,0,20"/>
 
             <!-- Simulacija alarma i stanja -->
             <Border BorderBrush="{StaticResource YokogawaGrey}" BorderThickness="1" Padding="15" Background="#121212">
