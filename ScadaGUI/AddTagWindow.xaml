@@ -43,6 +43,7 @@
             <RadioButton x:Name="RbAO" Content="AO (Analog Output)" GroupName="TagType" Checked="RadioButton_Checked" Margin="0,0,15,0"/>
             <RadioButton x:Name="RbDI" Content="DI (Digital Input)" GroupName="TagType" Checked="RadioButton_Checked" Margin="0,0,15,0"/>
             <RadioButton x:Name="RbDO" Content="DO (Digital Output)" GroupName="TagType" Checked="RadioButton_Checked"/>
+            <RadioButton x:Name="RbAlarm" Content="Alarm" Checked="RadioButton_Checked" />
         </StackPanel>
 
         <!-- 2. Zajednička polja -->
@@ -59,8 +60,12 @@
 
         <!-- 3. Dinamička polja -->
         <Grid Grid.Row="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="43*"/>
+                <ColumnDefinition Width="17*"/>
+            </Grid.ColumnDefinitions>
             <!-- AI PANEL (Podrazumevano vidljiv jer je AI IsChecked=True) -->
-            <StackPanel x:Name="PanelAI" Visibility="Visible">
+            <StackPanel x:Name="PanelAI" Visibility="Visible" Grid.ColumnSpan="2">
                 <TextBlock Text="Donja Granica (Min Vrednost):" Foreground="{StaticResource YokogawaRed}"/>
                 <TextBox x:Name="TxtAiLowLimit" Margin="0,5,0,10" Height="30" Foreground="White"/>
                 <TextBlock Text="Gornja Granica (Max Vrednost):" Foreground="{StaticResource YokogawaGrey}"/>
@@ -70,21 +75,33 @@
             </StackPanel>
 
             <!-- AO PANEL -->
-            <StackPanel x:Name="PanelAO" Visibility="Collapsed">
+            <StackPanel x:Name="PanelAO" Visibility="Collapsed" Grid.ColumnSpan="2">
                 <TextBlock Text="Početna Vrednost:" Foreground="{StaticResource YokogawaGrey}"/>
                 <TextBox x:Name="TxtAoInitValue" Margin="0,5,0,10" Height="30" Foreground="White"/>
             </StackPanel>
 
             <!-- DI PANEL -->
-            <StackPanel x:Name="PanelDI" Visibility="Collapsed">
+            <StackPanel x:Name="PanelDI" Visibility="Collapsed" Grid.ColumnSpan="2">
                 <TextBlock Text="Period Skeniranja (s):" Foreground="{StaticResource YokogawaGrey}"/>
                 <TextBox x:Name="TxtDiScanTime" Margin="0,5,0,10" Height="30" Foreground="White"/>
             </StackPanel>
 
             <!-- DO PANEL -->
-            <StackPanel x:Name="PanelDO" Visibility="Collapsed">
+            <StackPanel x:Name="PanelDO" Visibility="Collapsed" Grid.ColumnSpan="2">
                 <TextBlock Text="Početna Vrednost (0 ili 1):" Foreground="{StaticResource YokogawaGrey}"/>
                 <TextBox x:Name="TxtDoInitValue" Margin="0,5,0,10" Height="30" Foreground="White"/>
+            </StackPanel>
+
+            <!-- ALARM PANEL -->
+            <StackPanel x:Name="PanelAlarm" Visibility="Collapsed" Grid.ColumnSpan="2">
+                <Label Content="Limit vrednost:"/>
+                <TextBox x:Name="TxtAlarmLimit" Text="" />
+                <ComboBox x:Name="CbDirection" Margin="5">
+                    <ComboBoxItem Content="Above"/>
+                    <ComboBoxItem Content="Below"/>
+                </ComboBox>
+                <TextBox x:Name="TxtAlarmMessage" Text="Poruka alarma" Margin="5"/>
+                <ComboBox x:Name="CbTagList" DisplayMemberPath="Name" SelectedValuePath="Name" Margin="5"/>
             </StackPanel>
         </Grid>
 

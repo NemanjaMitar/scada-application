@@ -1,10 +1,11 @@
-﻿using System;
-using System.Windows;
-using System.Windows.Input;
-using System.Windows.Threading;
+﻿using DataConcentrator;
 using DataConcentrator.Model;
 using MaterialDesignThemes.Wpf;
 using ScadaGUI.Services;
+using System;
+using System.Linq;
+using System.Windows;
+using System.Windows.Threading;
 
 namespace ScadaGUI
 {
@@ -13,7 +14,6 @@ namespace ScadaGUI
         private User _currentUser;
         private DispatcherTimer _inactivityTimer;
 
-        // Izmijenjen konstruktor da prima prijavljenog korisnika
         public MainWindow(User currentUser)
         {
             InitializeComponent();
@@ -21,7 +21,6 @@ namespace ScadaGUI
 
             ApplyRoleBasedAccess();
 
-            // Ako je admin, inicijalizuj tajmer za neaktivnost (5 minuta)
             if (_currentUser.UserRole == Role.Admin)
             {
                 SetupInactivityTimer();
@@ -30,12 +29,9 @@ namespace ScadaGUI
 
         private void ApplyRoleBasedAccess()
         {
-            // Prema zahtjevu: Admin ima Read/Write access a ostalima samo Read.
-            // Onemogućavamo akcije upisivanja/dodavanja za ostale uloge.
             if (_currentUser.UserRole != Role.Admin)
             {
-                BtnAddTag.IsEnabled = false; // "Samo Read" pristup
-                // Ovdje onemogućite i sve ostale kontrole koje vrše pisanje
+                BtnAddTag.IsEnabled = false;
             }
         }
 
@@ -46,9 +42,6 @@ namespace ScadaGUI
             _inactivityTimer.Tick += InactivityTimer_Tick;
             _inactivityTimer.Start();
 
-            // Prati samo namerne akcije (klik/kucanje) - MouseMove je namjerno izostavljen
-            // jer se okida i pri običnom prelasku kursora preko (nefokusiranog) prozora,
-            // što je tiho resetovalo tajmer i sprečavalo auto-logout da se ikad desi.
             this.KeyDown += ResetTimerOnActivity;
             this.MouseDown += ResetTimerOnActivity;
         }
@@ -89,7 +82,50 @@ namespace ScadaGUI
             paletteHelper.SetTheme(theme);
         }
 
-        // Ostale postojeće metode ostaju netaknute...
-        private void AddButton_Click(object sender, RoutedEventArgs e) { /* ... */ }
+        private void AddButton_Click(object sender, RoutedEventArgs e)
+        {
+            AddTagWindow addTagWindow = new AddTagWindow();
+            addTagWindow.Owner = this;
+
+            if (addTagWindow.ShowDialog() == true)
+            {
+                try
+                {
+                    // 1. Ako je kreiran Tag
+                    if (addTagWindow.CreatedTag != null)
+                    {
+                        ContextClass.Instance.Tags.Add(addTagWindow.CreatedTag);
+                        Logger.Log($"Tag '{addTagWindow.CreatedTag.Name}' je dodan.");
+                    }
+                    // 2. Ako je kreiran Alarm
+                    else if (addTagWindow.CreatedAlarm != null)
+                    {
+                        ContextClass.Instance.Alarms.Add(addTagWindow.CreatedAlarm);
+                        Logger.Log($"Alarm za tag '{addTagWindow.CreatedAlarm.TagName}' je dodan.");
+                    }
+
+                    ContextClass.Instance.SaveChanges();
+                    RefreshTagsGrid();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Greška pri čuvanju: {ex.Message}");
+                }
+            }
+        }
+
+        private void RefreshTagsGrid()
+        {
+            try
+            {
+                var sviTagovi = ContextClass.Instance.Tags.ToList();
+                System.Diagnostics.Debug.WriteLine($"Osvježeno. Broj tagova: {sviTagovi.Count}");
+                // Ako kasnije dodaš DataGrid, ovde stavi: TagsDataGrid.ItemsSource = sviTagovi;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Greška pri učitavanju: {ex.Message}");
+            }
+        }
     }
 }
