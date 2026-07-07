@@ -3,121 +3,96 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:ScadaGUI"
         mc:Ignorable="d"
-        Title="Add Tag" Height="800" Width="700" 
+        Title="Dodaj" Height="650" Width="600" 
         WindowStartupLocation="CenterOwner"
-        
-    Style="{StaticResource MaterialDesignWindow}"
-        
         Background="#0A0A0A" 
-        Foreground="{StaticResource YokogawaText}"
-        TextElement.Foreground="{StaticResource YokogawaText}">
-
-    <!-- 2. POPRAVKA: Stavite pozadinu direktno na Grid da osigurate duboku crnu boju -->
-    <Grid Margin="20" Background="{DynamicResource YokogawaBackground}">
+        Foreground="White">
+    <Grid Margin="20">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <!-- 0. Naslov -->
             <RowDefinition Height="Auto"/>
-            <!-- 1. Radio Dugmad -->
             <RowDefinition Height="Auto"/>
-            <!-- 2. Zajednička polja -->
             <RowDefinition Height="*"/>
-            <!-- 3. Dinamička polja -->
             <RowDefinition Height="Auto"/>
-            <!-- 4. Dugmad na dnu -->
         </Grid.RowDefinitions>
 
-        <!-- Ostatak vašeg XAML koda (Naslov, Radio dugmad, Paneli...) ostaje potpuno isti -->
+        <TextBlock Grid.Row="0" Text="Dodaj Novi Objekat" FontSize="20" FontWeight="Bold" Margin="0,0,0,15"/>
 
-
-        <!-- 0. Naslov -->
-        <TextBlock Grid.Row="0" Text="Dodaj Novi Tag" FontSize="20" FontWeight="Bold" Foreground="{StaticResource YokogawaText}" Margin="0,0,0,15"/>
-
-        <!-- 1. Radio dugmad -->
-        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,0,0,20">
-            <TextBlock Text="Tip taga: " VerticalAlignment="Center" FontWeight="Bold" Margin="0,0,15,0"/>
-            <RadioButton x:Name="RbAI" Content="AI (Analog Input)" GroupName="TagType" IsChecked="True" Checked="RadioButton_Checked" Margin="0,0,15,0"/>
-            <RadioButton x:Name="RbAO" Content="AO (Analog Output)" GroupName="TagType" Checked="RadioButton_Checked" Margin="0,0,15,0"/>
-            <RadioButton x:Name="RbDI" Content="DI (Digital Input)" GroupName="TagType" Checked="RadioButton_Checked" Margin="0,0,15,0"/>
-            <RadioButton x:Name="RbDO" Content="DO (Digital Output)" GroupName="TagType" Checked="RadioButton_Checked"/>
-            <RadioButton x:Name="RbAlarm" Content="Alarm" Checked="RadioButton_Checked" />
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,0,0,15">
+            <TextBlock Text="Tip: " VerticalAlignment="Center" FontWeight="Bold" Margin="0,0,15,0"/>
+            <RadioButton x:Name="RbAI" Content="AI" GroupName="TagType" IsChecked="True" Checked="RadioButton_Checked" Margin="0,0,15,0" Foreground="White"/>
+            <RadioButton x:Name="RbAO" Content="AO" GroupName="TagType" Checked="RadioButton_Checked" Margin="0,0,15,0" Foreground="White"/>
+            <RadioButton x:Name="RbDI" Content="DI" GroupName="TagType" Checked="RadioButton_Checked" Margin="0,0,15,0" Foreground="White"/>
+            <RadioButton x:Name="RbDO" Content="DO" GroupName="TagType" Checked="RadioButton_Checked" Margin="0,0,15,0" Foreground="White"/>
+            <RadioButton x:Name="RbAlarm" Content="Alarm" GroupName="TagType" Checked="RadioButton_Checked" Foreground="White"/>
         </StackPanel>
 
-        <!-- 2. Zajednička polja -->
         <StackPanel Grid.Row="2" Margin="0,0,0,15">
-            <TextBlock Text="Ime Taga:" Foreground="{StaticResource YokogawaGreen}"/>
-            <TextBox x:Name="TxtName" Margin="0,5,0,10" Height="30" Foreground="White" CaretBrush="White"/>
+            <TextBlock Text="Ime Taga/Alarma:"/>
+            <TextBox x:Name="TxtName" Margin="0,5,0,10" Height="25"/>
 
-            <TextBlock Text="I/O Adresa:" Foreground="{StaticResource YokogawaGrey}"/>
-            <TextBox x:Name="TxtAddress" Margin="0,5,0,10" Height="30" Foreground="White" CaretBrush="White"/>
+            <TextBlock x:Name="LblAddress" Text="I/O Adresa:"/>
+            <TextBox x:Name="TxtAddress" Margin="0,5,0,10" Height="25"/>
 
-            <TextBlock Text="Opis (Opciono):" Foreground="{StaticResource YokogawaGrey}"/>
-            <TextBox x:Name="TxtDescription" Margin="0,5,0,10" Height="30" Foreground="White" CaretBrush="White"/>
+            <TextBlock Text="Opis:"/>
+            <TextBox x:Name="TxtDescription" Margin="0,5,0,10" Height="25"/>
         </StackPanel>
 
-        <!-- 3. Dinamička polja -->
-        <Grid Grid.Row="3">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="43*"/>
-                <ColumnDefinition Width="17*"/>
-            </Grid.ColumnDefinitions>
-            <!-- AI PANEL (Podrazumevano vidljiv jer je AI IsChecked=True) -->
-            <StackPanel x:Name="PanelAI" Visibility="Visible" Grid.ColumnSpan="2">
-                <TextBlock Text="Donja Granica (Min Vrednost):" Foreground="{StaticResource YokogawaRed}"/>
-                <TextBox x:Name="TxtAiLowLimit" Margin="0,5,0,10" Height="30" Foreground="White"/>
-                <TextBlock Text="Gornja Granica (Max Vrednost):" Foreground="{StaticResource YokogawaGrey}"/>
-                <TextBox x:Name="TxtAiHighLimit" Margin="0,5,0,10" Height="30" Foreground="White"/>
-                <TextBlock Text="Period Osvežavanja (s):" Foreground="{StaticResource YokogawaGrey}"/>
-                <TextBox x:Name="TxtAiScanTime" Margin="0,5,0,10" Height="30" Foreground="White"/>
-            </StackPanel>
+        <ScrollViewer Grid.Row="3" VerticalScrollBarVisibility="Auto">
+            <Grid>
+                <StackPanel x:Name="PanelAI" Visibility="Visible">
+                    <TextBlock Text="Donja granica (Low Limit):"/>
+                    <TextBox x:Name="TxtAiLowLimit" Margin="0,5,0,10" Height="25" Text="0"/>
+                    <TextBlock Text="Gornja granica (High Limit):"/>
+                    <TextBox x:Name="TxtAiHighLimit" Margin="0,5,0,10" Height="25" Text="100"/>
+                    <TextBlock Text="Jedinica (Units):"/>
+                    <TextBox x:Name="TxtAiUnits" Margin="0,5,0,10" Height="25" Text="°C"/>
+                    <TextBlock Text="Period skeniranja (s):"/>
+                    <TextBox x:Name="TxtAiScanTime" Margin="0,5,0,10" Height="25" Text="1"/>
+                    <CheckBox x:Name="ChkAiOnScan" Content="On scan" IsChecked="True" Foreground="White" Margin="0,5,0,10"/>
+                    <TextBlock Text="Deadband:"/>
+                    <TextBox x:Name="TxtAiDeadband" Margin="0,5,0,10" Height="25" Text="0"/>
+                    <TextBlock Text="Hysteresis:"/>
+                    <TextBox x:Name="TxtAiHysteresis" Margin="0,5,0,10" Height="25" Text="0"/>
+                </StackPanel>
 
-            <!-- AO PANEL -->
-            <StackPanel x:Name="PanelAO" Visibility="Collapsed" Grid.ColumnSpan="2">
-                <TextBlock Text="Početna Vrednost:" Foreground="{StaticResource YokogawaGrey}"/>
-                <TextBox x:Name="TxtAoInitValue" Margin="0,5,0,10" Height="30" Foreground="White"/>
-            </StackPanel>
+                <StackPanel x:Name="PanelAO" Visibility="Collapsed">
+                    <TextBlock Text="Početna vrednost (Initial Value):"/>
+                    <TextBox x:Name="TxtAoInitValue" Margin="0,5,0,10" Height="25" Text="0"/>
+                </StackPanel>
 
-            <!-- DI PANEL -->
-            <StackPanel x:Name="PanelDI" Visibility="Collapsed" Grid.ColumnSpan="2">
-                <TextBlock Text="Period Skeniranja (s):" Foreground="{StaticResource YokogawaGrey}"/>
-                <TextBox x:Name="TxtDiScanTime" Margin="0,5,0,10" Height="30" Foreground="White"/>
-            </StackPanel>
+                <StackPanel x:Name="PanelDI" Visibility="Collapsed">
+                    <TextBlock Text="Period skeniranja (s):"/>
+                    <TextBox x:Name="TxtDiScanTime" Margin="0,5,0,10" Height="25" Text="1"/>
+                    <CheckBox x:Name="ChkDiOnScan" Content="On scan" IsChecked="True" Foreground="White" Margin="0,5,0,10"/>
+                </StackPanel>
 
-            <!-- DO PANEL -->
-            <StackPanel x:Name="PanelDO" Visibility="Collapsed" Grid.ColumnSpan="2">
-                <TextBlock Text="Početna Vrednost (0 ili 1):" Foreground="{StaticResource YokogawaGrey}"/>
-                <TextBox x:Name="TxtDoInitValue" Margin="0,5,0,10" Height="30" Foreground="White"/>
-            </StackPanel>
+                <StackPanel x:Name="PanelDO" Visibility="Collapsed">
+                    <TextBlock Text="Početna vrednost (0 ili 1):"/>
+                    <TextBox x:Name="TxtDoInitValue" Margin="0,5,0,10" Height="25" Text="0"/>
+                </StackPanel>
 
-            <!-- ALARM PANEL -->
-            <StackPanel x:Name="PanelAlarm" Visibility="Collapsed" Grid.ColumnSpan="2">
-                <Label Content="Limit vrednost:"/>
-                <TextBox x:Name="TxtAlarmLimit" Text="" />
-                <ComboBox x:Name="CbDirection" Margin="5">
-                    <ComboBoxItem Content="Above"/>
-                    <ComboBoxItem Content="Below"/>
-                </ComboBox>
-                <TextBox x:Name="TxtAlarmMessage" Text="Poruka alarma" Margin="5"/>
-                <ComboBox x:Name="CbTagList" DisplayMemberPath="Name" SelectedValuePath="Name" Margin="5"/>
-            </StackPanel>
-        </Grid>
+                <StackPanel x:Name="PanelAlarm" Visibility="Collapsed">
+                    <TextBlock Text="Limit vrednost:"/>
+                    <TextBox x:Name="TxtAlarmLimit" Margin="0,5,0,10" Height="25"/>
+                    <TextBlock Text="Smer alarma:"/>
+                    <ComboBox x:Name="CbDirection" Margin="0,5,0,10" Height="25">
+                        <ComboBoxItem Content="Above" IsSelected="True"/>
+                        <ComboBoxItem Content="Below"/>
+                    </ComboBox>
+                    <TextBlock Text="Poruka alarma:"/>
+                    <TextBox x:Name="TxtAlarmMessage" Margin="0,5,0,10" Height="25"/>
+                    <TextBlock Text="AI tag:"/>
+                    <ComboBox x:Name="CbTagList" DisplayMemberPath="Name" SelectedValuePath="Name" Margin="0,5,0,10" Height="25"/>
+                </StackPanel>
+            </Grid>
+        </ScrollViewer>
 
-        <!-- 4. Dugmad na dnu (Dodati Material Design stilovi i Yokogawa boje) -->
         <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,15,0,0">
-            <Button Content="Sačuvaj" Click="SaveButton_Click" 
-                    Style="{StaticResource MaterialDesignFlatDarkBgButton}"
-                    Background="{StaticResource YokogawaGreen}" 
-                    BorderBrush="{StaticResource YokogawaGreen}"
-                    Foreground="Black" FontWeight="Bold" Width="100" Height="35" Margin="0,0,10,0" IsDefault="True"/>
-
-            <Button Content="Otkaži" IsCancel="True"
-                    Style="{StaticResource MaterialDesignFlatDarkBgButton}"
-                    Background="{StaticResource YokogawaGrey}" 
-                    BorderBrush="{StaticResource YokogawaGrey}"
-                    Foreground="White" Width="100" Height="35"/>
+            <Button Content="Sačuvaj" Click="SaveButton_Click" Width="100" Height="30" Margin="0,0,10,0" Background="LimeGreen" Foreground="Black" FontWeight="Bold" IsDefault="True"/>
+            <Button Content="Otkaži" IsCancel="True" Width="100" Height="30" Background="Gray" Foreground="White"/>
         </StackPanel>
     </Grid>
 </Window>

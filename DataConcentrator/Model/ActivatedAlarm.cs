@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace DataConcentrator
+namespace DataConcentrator.Model
 {
     public class ActivatedAlarm
     {
@@ -11,6 +11,7 @@ namespace DataConcentrator
 
         [ForeignKey("Alarm")]
         public int AlarmId { get; set; }
+
         public virtual Alarm Alarm { get; set; }
 
         public string TagName { get; set; }

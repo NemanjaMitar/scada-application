@@ -1,0 +1,36 @@
+<Window x:Class="ScadaGUI.DetailsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Detalji" Height="500" Width="700"
+        Background="Black" Foreground="White"
+        WindowStartupLocation="CenterOwner">
+    <Grid Margin="15">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" Text="{Binding TagName, StringFormat='Detalji za tag: {0}'}" FontSize="18" FontWeight="Bold" Margin="0,0,0,15"/>
+
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,0,0,10">
+            <Button x:Name="BtnAcknowledge" Content="ACKNOWLEDGE" Click="AcknowledgeButton_Click" Width="120" Height="30" Margin="0,0,10,0" Background="Yellow" Foreground="Black" FontWeight="Bold"/>
+            <Button x:Name="BtnRemoveAlarm" Content="OBRISI ALARM" Click="RemoveAlarmButton_Click" Width="120" Height="30" Background="Red" Foreground="White" FontWeight="Bold"/>
+        </StackPanel>
+
+        <DataGrid Grid.Row="2" x:Name="AlarmsDataGrid" AutoGenerateColumns="False" IsReadOnly="True"
+                  CanUserAddRows="False" Background="#111111" RowBackground="#1A1A1A"
+                  Foreground="White" BorderBrush="Gray" SelectionMode="Single">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="50"/>
+                <DataGridTextColumn Header="Limit" Binding="{Binding LimitValue}" Width="80"/>
+                <DataGridTextColumn Header="Smer" Binding="{Binding Direction}" Width="80"/>
+                <DataGridTextColumn Header="Poruka" Binding="{Binding Message}" Width="*"/>
+                <DataGridTextColumn Header="Stanje" Binding="{Binding State}" Width="100"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <Button Grid.Row="3" Content="Zatvori" IsCancel="True" Width="100" Height="30" HorizontalAlignment="Right" Margin="0,10,0,0" Background="Gray"/>
+    </Grid>
+</Window>

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DataConcentrator.Model
 {
-    internal interface IOutputTags
+    public interface IOutputTags
     {
         double InitValue { get; }
     }

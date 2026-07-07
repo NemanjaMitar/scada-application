@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace DataConcentrator
+namespace DataConcentrator.Model
 {
     public enum EAlarmDirection
     {
@@ -29,9 +29,9 @@ namespace DataConcentrator
 
         public EAlarmState State { get; set; }
 
-        // Veza ka tagu (analognom ulazu) nad kojim je alarm definisan
-        [ForeignKey("Tag")]
+        [ForeignKey("TagNavigation")]
         public string TagName { get; set; }
-        public virtual Tag Tag { get; set; }
+
+        public virtual Tag TagNavigation { get; set; }
     }
 }

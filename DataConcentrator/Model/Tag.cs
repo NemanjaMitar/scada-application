@@ -1,29 +1,18 @@
 ﻿using DataConcentrator.Utils;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace DataConcentrator
+namespace DataConcentrator.Model
 {
-    // napraviti AnalogInput, AnalogOuput, DigitalInput i 
-    // DigitalOutput klase koje nasledjuju Tag klasu
     public class Tag : INotifyPropertyChanged
     {
         private string name;
-
         private string description;
-
         private string address;
 
-        // Null je za tagove koje cemo tek da inicijalizujemo, taman malo Mitrovic da vezba explicitnu konverziju :skull:
         public virtual ETagType Type { get; } = ETagType.NULL;
-
-
-        #region Properties
 
         [Key]
         public string Name
@@ -45,7 +34,7 @@ namespace DataConcentrator
                 OnPropertyChanged("Description");
             }
         }
-        
+
         public string Address
         {
             get { return address; }
@@ -55,9 +44,6 @@ namespace DataConcentrator
                 OnPropertyChanged("Address");
             }
         }
-        #endregion
-
-        #region INotifyPropertyChanged Members
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -65,7 +51,5 @@ namespace DataConcentrator
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(property));
         }
-
-        #endregion
     }
 }

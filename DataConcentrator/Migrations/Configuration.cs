@@ -1,23 +1,27 @@
-﻿namespace DataConcentrator.Migrations
+namespace DataConcentrator.Migrations
 {
-    using System;
-    using System.Data.Entity;
     using System.Data.Entity.Migrations;
-    using System.Linq;
+    using DataConcentrator.Model;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<DataConcentrator.ContextClass>
+    public sealed class Configuration : DbMigrationsConfiguration<DataConcentrator.ContextClass>
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
+            AutomaticMigrationsEnabled = true;
+            AutomaticMigrationDataLossAllowed = true;
+            ContextKey = "DataConcentrator.ContextClass";
         }
 
         protected override void Seed(DataConcentrator.ContextClass context)
         {
-            //  This method will be called after migrating to the latest version.
-
-            //  You can use the DbSet<T>.AddOrUpdate() helper extension method
-            //  to avoid creating duplicate seed data.
+            context.Users.AddOrUpdate(
+                u => u.Username,
+                new User
+                {
+                    Username = "admin",
+                    Password = "P@ssw0rd12345!",
+                    UserRole = Role.Admin
+                });
         }
     }
 }

@@ -8,11 +8,12 @@ using PLCSimulator;
 
 namespace DataConcentrator
 {
-    public class PLC
+    public static class PLC
     {
-        public static PLCSimulatorManager instance;
+        private static PLCSimulatorManager instance;
+        private static readonly object lockObj = new object();
 
-        public static Dictionary<string, Thread> tagThreads = new Dictionary<string, Thread>();
+        public static object LockObject => lockObj;
 
         public static PLCSimulatorManager Instance
         {
@@ -20,17 +21,23 @@ namespace DataConcentrator
             {
                 if (instance == null)
                 {
-                    instance = new PLCSimulatorManager();
-                    instance.StartPLCSimulator();
+                    lock (lockObj)
+                    {
+                        if (instance == null)
+                        {
+                            instance = new PLCSimulatorManager();
+                            instance.StartPLCSimulator();
+                        }
+                    }
                 }
                 return instance;
             }
         }
 
-        public void StopSimulator()
+        public static void StopSimulator()
         {
-            instance.Abort();
+            instance?.Abort();
+            instance = null;
         }
-         
     }
 }

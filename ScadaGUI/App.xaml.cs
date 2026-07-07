@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using DataConcentrator;
+using System.Data.Entity;
 using System.Windows;
 
 namespace ScadaGUI
@@ -13,5 +9,19 @@ namespace ScadaGUI
     /// </summary>
     public partial class App : Application
     {
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            base.OnStartup(e);
+
+            try
+            {
+                ContextClass.Instance.Database.Initialize(false);
+                Logger.Log("Aplikacija pokrenuta. Baza inicijalizovana.");
+            }
+            catch (System.Exception ex)
+            {
+                Logger.Log($"Greška pri inicijalizaciji baze: {ex.Message}");
+            }
+        }
     }
 }

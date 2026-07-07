@@ -1,7 +1,6 @@
 ﻿using DataConcentrator;
 using DataConcentrator.Model;
 using MaterialDesignThemes.Wpf;
-using ScadaGUI.Services;
 using System;
 using System.Linq;
 using System.Windows;

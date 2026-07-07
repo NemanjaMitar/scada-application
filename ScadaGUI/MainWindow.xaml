@@ -3,62 +3,94 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:ScadaGUI"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="SCADA Application" Height="450" Width="800"
-        Background="{DynamicResource MaterialDesignPaper}"
-        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        Title="SCADA Application" Height="650" Width="1200"
+        Background="Black"
         Closing="Window_Closing">
-    <Grid Margin="20">
+    <Window.Resources>
+        <Style x:Key="DefaultCellStyle" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="2"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <!-- Gornja traka sa dugmetom za temu -->
             <RowDefinition Height="*"/>
-            <!-- SCADA Sadržaj -->
+            <RowDefinition Height="220"/>
         </Grid.RowDefinitions>
 
-        <!-- Gornji panel sa kontrolama -->
-        <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,0,20">
-            <!-- Material Design dugme za promenu teme (Light/Dark) -->
-            <Button x:Name="BtnToggleTheme" 
-        Content="Promeni Temu (Light/Dark)" 
-        Click="BtnToggleTheme_Click"
-        Background="{StaticResource YokogawaGrey}"
-        BorderBrush="{StaticResource YokogawaGrey}"/>
+        <!-- Toolbar -->
+        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="0,0,0,10">
+            <Button x:Name="BtnAddTag" Content="DODAJ" Click="AddButton_Click" Width="100" Height="35" Margin="0,0,10,0" Background="LimeGreen" Foreground="Black" FontWeight="Bold"/>
+            <Button x:Name="BtnRemoveTag" Content="OBRISI" Click="RemoveButton_Click" Width="100" Height="35" Margin="0,0,10,0" Background="Red" Foreground="White" FontWeight="Bold"/>
+            <Button x:Name="BtnDetails" Content="DETALJI" Click="DetailsButton_Click" Width="100" Height="35" Margin="0,0,10,0" Background="Orange" Foreground="Black" FontWeight="Bold"/>
+            <Button x:Name="BtnToggleScan" Content="ON/OFF SCAN" Click="ToggleScanButton_Click" Width="110" Height="35" Margin="0,0,10,0" Background="CornflowerBlue" Foreground="White" FontWeight="Bold"/>
+            <Button x:Name="BtnReport" Content="REPORT" Click="ReportButton_Click" Width="100" Height="35" Margin="0,0,10,0" Background="Gold" Foreground="Black" FontWeight="Bold"/>
+            <Button x:Name="BtnToggleTheme" Content="Tema" Click="BtnToggleTheme_Click" Width="80" Height="35" Margin="0,0,10,0" Background="Gray" Foreground="White"/>
+            <TextBlock x:Name="TbCurrentUser" VerticalAlignment="Center" Margin="20,0,0,0" Foreground="White" FontWeight="Bold"/>
         </StackPanel>
 
-        <!-- Primer SCADA UI elemenata (Yokogawa stil) -->
-        <StackPanel Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" Width="400">
-            <Button x:Name="BtnAddTag" 
-                        Content="DODAJ NOVI TAG" 
-                        Click="AddButton_Click" 
-                        Background="{StaticResource YokogawaGreen}" 
-                        BorderBrush="{StaticResource YokogawaGreen}"
-                        Foreground="Black" FontWeight="Bold" Height="45" Margin="0,0,0,20"/>
+        <!-- Tags DataGrid -->
+        <DataGrid Grid.Row="1" x:Name="TagsDataGrid" AutoGenerateColumns="False" IsReadOnly="True"
+                  SelectionMode="Single" SelectionUnit="FullRow" GridLinesVisibility="All"
+                  Background="#111111" RowBackground="#1A1A1A" AlternatingRowBackground="#222222"
+                  Foreground="White" BorderBrush="Gray" CanUserAddRows="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Ime" Binding="{Binding Name}" Width="120" ElementStyle="{StaticResource DefaultCellStyle}"/>
+                <DataGridTextColumn Header="Tip" Binding="{Binding Type}" Width="60" ElementStyle="{StaticResource DefaultCellStyle}"/>
+                <DataGridTextColumn Header="Adresa" Binding="{Binding Address}" Width="100" ElementStyle="{StaticResource DefaultCellStyle}"/>
+                <DataGridTextColumn Header="Opis" Binding="{Binding Description}" Width="150" ElementStyle="{StaticResource DefaultCellStyle}"/>
+                <DataGridTextColumn Header="Vrednost" Binding="{Binding Value, StringFormat={}{0:F2}}" Width="100" ElementStyle="{StaticResource DefaultCellStyle}"/>
+                <DataGridTextColumn Header="Trenutna" Binding="{Binding CurrentValue}" Width="100" ElementStyle="{StaticResource DefaultCellStyle}"/>
+                <DataGridTextColumn Header="On Scan" Binding="{Binding IsOnScan}" Width="70" ElementStyle="{StaticResource DefaultCellStyle}"/>
+                <DataGridTextColumn Header="Scan Time" Binding="{Binding ScanTime}" Width="90" ElementStyle="{StaticResource DefaultCellStyle}"/>
+                <DataGridTextColumn Header="Units" Binding="{Binding Units}" Width="60" ElementStyle="{StaticResource DefaultCellStyle}"/>
+                <DataGridTextColumn Header="Low Limit" Binding="{Binding LowLimit, StringFormat={}{0:F2}}" Width="80" ElementStyle="{StaticResource DefaultCellStyle}"/>
+                <DataGridTextColumn Header="High Limit" Binding="{Binding HighLimit, StringFormat={}{0:F2}}" Width="80" ElementStyle="{StaticResource DefaultCellStyle}"/>
+            </DataGrid.Columns>
+        </DataGrid>
 
-            <!-- Simulacija alarma i stanja -->
-            <Border BorderBrush="{StaticResource YokogawaGrey}" BorderThickness="1" Padding="15" Background="#121212">
+        <!-- Bottom panel: Write value + Alarms -->
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="350"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Border Grid.Column="0" BorderBrush="Gray" BorderThickness="1" Margin="0,0,10,0" Padding="10" Background="#1A1A1A">
                 <StackPanel>
-                    <TextBlock Text="SISTEMSKIALARMI" FontSize="14" FontWeight="Bold" Foreground="{StaticResource YokogawaRed}" Margin="0,0,0,10"/>
-
-                    <Grid Margin="0,5">
-                        <TextBlock Text="Merenje Pritiska (AI_01):" HorizontalAlignment="Left" Foreground="{StaticResource YokogawaText}"/>
-                        <TextBlock Text="CRITICAL HIGH" HorizontalAlignment="Right" Foreground="{StaticResource YokogawaRed}" FontWeight="Bold"/>
-                    </Grid>
-
-                    <Grid Margin="0,5">
-                        <TextBlock Text="Protok Ventila (AO_02):" HorizontalAlignment="Left" Foreground="{StaticResource YokogawaText}"/>
-                        <TextBlock Text="75.4 %" HorizontalAlignment="Right" Foreground="{StaticResource YokogawaText}"/>
-                    </Grid>
-
-                    <Grid Margin="0,5">
-                        <TextBlock Text="Glavni Motor (DI_01):" HorizontalAlignment="Left"  Foreground="{StaticResource YokogawaText}"/>
-                        <TextBlock Text="RUNNING" HorizontalAlignment="Right" Foreground="{StaticResource YokogawaGreen}" FontWeight="Bold"/>
-                    </Grid>
+                    <TextBlock Text="UPIS VREDNOSTI" FontWeight="Bold" FontSize="14" Margin="0,0,0,10" Foreground="White"/>
+                    <TextBlock Text="Nova vrednost:" Foreground="White"/>
+                    <TextBox x:Name="TxtWriteValue" Margin="0,5,0,10" Foreground="White" Background="#333333"/>
+                    <Button x:Name="BtnWrite" Content="UPISI" Click="WriteValueButton_Click" Width="100" Height="30" HorizontalAlignment="Left" Background="LimeGreen" Foreground="Black" FontWeight="Bold"/>
                 </StackPanel>
             </Border>
-        </StackPanel>
-    </Grid>
 
+            <Border Grid.Column="1" BorderBrush="Gray" BorderThickness="1" Padding="10" Background="#1A1A1A">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Text="AKTIVNI ALARMI" FontWeight="Bold" FontSize="14" Margin="0,0,0,10" Foreground="Red"/>
+                    <DataGrid Grid.Row="1" x:Name="AlarmsDataGrid" AutoGenerateColumns="False" IsReadOnly="True"
+                              CanUserAddRows="False" Background="#111111" RowBackground="#1A1A1A"
+                              Foreground="White" BorderBrush="Gray">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="50" ElementStyle="{StaticResource DefaultCellStyle}"/>
+                            <DataGridTextColumn Header="Tag" Binding="{Binding TagName}" Width="100" ElementStyle="{StaticResource DefaultCellStyle}"/>
+                            <DataGridTextColumn Header="Poruka" Binding="{Binding Message}" Width="*" ElementStyle="{StaticResource DefaultCellStyle}"/>
+                            <DataGridTextColumn Header="Vreme" Binding="{Binding Timestamp, StringFormat=yyyy-MM-dd HH:mm:ss}" Width="130" ElementStyle="{StaticResource DefaultCellStyle}"/>
+                            <DataGridCheckBoxColumn Header="Ack" Binding="{Binding IsAcknowledged}" Width="50"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </Border>
+        </Grid>
+    </Grid>
 </Window>

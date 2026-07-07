@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Linq;
-using System.Text.RegularExpressions;
 using System.Windows;
 using DataConcentrator;
 using DataConcentrator.Model;
-using ScadaGUI.Services;
 
 namespace ScadaGUI
 {
@@ -48,7 +46,6 @@ namespace ScadaGUI
                 return;
             }
 
-            // Provjera jedinstvenosti lozinke u bazi (prema zahtjevu zadatka)
             if (ContextClass.Instance.Users.Any(u => u.Password == password))
             {
                 MessageBox.Show("Ova lozinka se već koristi u bazi. Molimo izaberite drugu.", "Greška", MessageBoxButton.OK, MessageBoxImage.Warning);
@@ -81,9 +78,8 @@ namespace ScadaGUI
         {
             if (string.IsNullOrEmpty(password) || password.Length < 15) return false;
 
-            if (!password.Any(char.IsUpper)) return false; // Provera velikog slova
-            if (!password.Any(char.IsLower)) return false; // Provera malog slova
-                                                           // Provera za specijalni karakter (sve što nije slovo ili broj)
+            if (!password.Any(char.IsUpper)) return false;
+            if (!password.Any(char.IsLower)) return false;
             if (!password.Any(ch => !char.IsLetterOrDigit(ch))) return false;
 
             return true;
