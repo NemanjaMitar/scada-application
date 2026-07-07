@@ -125,30 +125,40 @@ namespace PLCSimulator
 
         public double GetAnalogValue(string address)
         {
-            if (addressValues.ContainsKey(address))
+            // Zaključavanje pri čitanju iz PLC-a (deljena kolekcija addressValues)
+            lock (locker)
             {
-                return addressValues[address];
+                if (addressValues.ContainsKey(address))
+                {
+                    return addressValues[address];
+                }
+                else
+                {
+                    return -1;
+                }
             }
-            else
-            {
-                return -1;
-            }
-            
         }
 
         public void SetAnalogValue(string address, double value)
         {
-            if (addressValues.ContainsKey(address))
+            // Zaključavanje pri pisanju u PLC
+            lock (locker)
             {
-                addressValues[address] = value;
+                if (addressValues.ContainsKey(address))
+                {
+                    addressValues[address] = value;
+                }
             }
         }
 
         public void SetDigitalValue(string address, double value)
         {
-            if (addressValues.ContainsKey(address))
+            lock (locker)
             {
-                addressValues[address] = value;
+                if (addressValues.ContainsKey(address))
+                {
+                    addressValues[address] = value;
+                }
             }
         }
 

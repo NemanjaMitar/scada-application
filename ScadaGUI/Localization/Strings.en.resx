@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Btn_AddTag" xml:space="preserve">
+    <value>ADD NEW TAG</value>
+  </data>
+  <data name="Btn_DeleteTag" xml:space="preserve">
+    <value>DELETE TAG</value>
+  </data>
+  <data name="Btn_Alarms" xml:space="preserve">
+    <value>ALARMS</value>
+  </data>
+  <data name="Btn_ToggleTheme" xml:space="preserve">
+    <value>Toggle theme (Light/Dark)</value>
+  </data>
+  <data name="Lbl_Sound" xml:space="preserve">
+    <value>Sound:</value>
+  </data>
+  <data name="Lbl_Volume" xml:space="preserve">
+    <value>Volume:</value>
+  </data>
+  <data name="Lbl_Language" xml:space="preserve">
+    <value>Language:</value>
+  </data>
+  <data name="Lbl_Timezone" xml:space="preserve">
+    <value>Timezone (UTC):</value>
+  </data>
+  <data name="Lbl_DateFormat" xml:space="preserve">
+    <value>Date format:</value>
+  </data>
+  <data name="Lbl_Clock" xml:space="preserve">
+    <value>Time:</value>
+  </data>
+  <data name="Col_Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="Col_Type" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="Col_Address" xml:space="preserve">
+    <value>Address</value>
+  </data>
+  <data name="Col_Description" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="Tt_AddTag" xml:space="preserve">
+    <value>Opens the window to add a new tag or alarm</value>
+  </data>
+  <data name="Tt_DeleteTag" xml:space="preserve">
+    <value>Deletes the selected tag and all of its alarms</value>
+  </data>
+  <data name="Tt_Alarms" xml:space="preserve">
+    <value>Shows the list of alarms with acknowledge capability</value>
+  </data>
+  <data name="Tt_ToggleTheme" xml:space="preserve">
+    <value>Switches the application between light and dark theme</value>
+  </data>
+  <data name="Tt_Sound" xml:space="preserve">
+    <value>Choice of the alarm sound signal</value>
+  </data>
+  <data name="Tt_Volume" xml:space="preserve">
+    <value>Alarm sound volume</value>
+  </data>
+  <data name="Tt_Language" xml:space="preserve">
+    <value>User interface language</value>
+  </data>
+  <data name="Tt_Timezone" xml:space="preserve">
+    <value>Timezone used to display time</value>
+  </data>
+  <data name="Tt_DateFormat" xml:space="preserve">
+    <value>Date and time display format</value>
+  </data>
+  <data name="Add_Title" xml:space="preserve">
+    <value>Add New Tag</value>
+  </data>
+  <data name="Add_TagType" xml:space="preserve">
+    <value>Tag type: </value>
+  </data>
+  <data name="Add_RbAI" xml:space="preserve">
+    <value>AI (Analog Input)</value>
+  </data>
+  <data name="Add_RbAO" xml:space="preserve">
+    <value>AO (Analog Output)</value>
+  </data>
+  <data name="Add_RbDI" xml:space="preserve">
+    <value>DI (Digital Input)</value>
+  </data>
+  <data name="Add_RbDO" xml:space="preserve">
+    <value>DO (Digital Output)</value>
+  </data>
+  <data name="Add_RbAlarm" xml:space="preserve">
+    <value>Alarm</value>
+  </data>
+  <data name="Add_Name" xml:space="preserve">
+    <value>Tag Name:</value>
+  </data>
+  <data name="Add_Address" xml:space="preserve">
+    <value>I/O Address:</value>
+  </data>
+  <data name="Add_Description" xml:space="preserve">
+    <value>Description (Optional):</value>
+  </data>
+  <data name="Add_AiLow" xml:space="preserve">
+    <value>Low Limit (Min Value):</value>
+  </data>
+  <data name="Add_AiHigh" xml:space="preserve">
+    <value>High Limit (Max Value):</value>
+  </data>
+  <data name="Add_AiScan" xml:space="preserve">
+    <value>Scan Time (s):</value>
+  </data>
+  <data name="Add_AoInit" xml:space="preserve">
+    <value>Initial Value:</value>
+  </data>
+  <data name="Add_DiScan" xml:space="preserve">
+    <value>Scan Time (s):</value>
+  </data>
+  <data name="Add_DoInit" xml:space="preserve">
+    <value>Initial Value (0 or 1):</value>
+  </data>
+  <data name="Add_AlarmSensor" xml:space="preserve">
+    <value>Sensor (AI tag):</value>
+  </data>
+  <data name="Add_AlarmLimit" xml:space="preserve">
+    <value>Limit value:</value>
+  </data>
+  <data name="Add_AlarmDirection" xml:space="preserve">
+    <value>Direction:</value>
+  </data>
+  <data name="Add_AlarmMessage" xml:space="preserve">
+    <value>Alarm message:</value>
+  </data>
+  <data name="Add_Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="Add_Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="Alarms_Title" xml:space="preserve">
+    <value>Defined alarms</value>
+  </data>
+  <data name="Alarms_ColMessage" xml:space="preserve">
+    <value>Message</value>
+  </data>
+  <data name="Alarms_ColTag" xml:space="preserve">
+    <value>Tag</value>
+  </data>
+  <data name="Alarms_ColLimit" xml:space="preserve">
+    <value>Limit</value>
+  </data>
+  <data name="Alarms_ColDirection" xml:space="preserve">
+    <value>Direction</value>
+  </data>
+  <data name="Alarms_ColState" xml:space="preserve">
+    <value>State</value>
+  </data>
+  <data name="Alarms_Activate" xml:space="preserve">
+    <value>Activate (simulation)</value>
+  </data>
+  <data name="Alarms_Acknowledge" xml:space="preserve">
+    <value>Acknowledge</value>
+  </data>
+  <data name="Alarms_Close" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="Alarms_TtActivate" xml:space="preserve">
+    <value>Simulates the value entering the alarm zone (starts the sound)</value>
+  </data>
+  <data name="Alarms_TtAcknowledge" xml:space="preserve">
+    <value>Acknowledges the alarm and stops the sound</value>
+  </data>
+  <data name="Btn_Details" xml:space="preserve">
+    <value>DETAILS (AI)</value>
+  </data>
+  <data name="Btn_ScanToggle" xml:space="preserve">
+    <value>SCAN ON/OFF</value>
+  </data>
+  <data name="Btn_Ack" xml:space="preserve">
+    <value>ACKNOWLEDGE</value>
+  </data>
+  <data name="Btn_Report" xml:space="preserve">
+    <value>REPORT</value>
+  </data>
+  <data name="Btn_Write" xml:space="preserve">
+    <value>WRITE (AO/DO)</value>
+  </data>
+  <data name="Lbl_Write" xml:space="preserve">
+    <value>Value:</value>
+  </data>
+  <data name="Col_Value" xml:space="preserve">
+    <value>Value</value>
+  </data>
+  <data name="Col_Status" xml:space="preserve">
+    <value>Alarm Status</value>
+  </data>
+  <data name="Tt_Details" xml:space="preserve">
+    <value>Shows all alarms for the selected AI tag</value>
+  </data>
+  <data name="Tt_ScanToggle" xml:space="preserve">
+    <value>Turns scanning on/off for the selected input tag</value>
+  </data>
+  <data name="Tt_Ack" xml:space="preserve">
+    <value>Acknowledges the alarm on the selected AI tag</value>
+  </data>
+  <data name="Tt_Report" xml:space="preserve">
+    <value>Generates a .txt report of AI values within (High+Low)/2 ± 5</value>
+  </data>
+  <data name="Tt_Write" xml:space="preserve">
+    <value>Writes a value to the selected output tag (AO/DO)</value>
+  </data>
+  <data name="Add_AiUnits" xml:space="preserve">
+    <value>Units:</value>
+  </data>
+  <data name="Add_AiDeadband" xml:space="preserve">
+    <value>Deadband:</value>
+  </data>
+  <data name="Add_AiHysteresis" xml:space="preserve">
+    <value>Hysteresis:</value>
+  </data>
+  <data name="Add_OnScan" xml:space="preserve">
+    <value>Scan enabled (On Scan)</value>
+  </data>
+</root>
