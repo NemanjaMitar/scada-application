@@ -3,13 +3,14 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace DataConcentrator
 {
-    // napraviti AnalogInput, AnalogOuput, DigitalInput i 
+    // napraviti AnalogInput, AnalogOuput, DigitalInput i
     // DigitalOutput klase koje nasledjuju Tag klasu
     public class Tag : INotifyPropertyChanged
     {
@@ -19,8 +20,19 @@ namespace DataConcentrator
 
         private string address;
 
+        private string alarmStatus = "Normal";
+
         // Null je za tagove koje cemo tek da inicijalizujemo, taman malo Mitrovic da vezba explicitnu konverziju :skull:
         public virtual ETagType Type { get; } = ETagType.NULL;
+
+        // Runtime status alarma za bojenje reda u tabeli (Normal / Active / Acknowledged).
+        // Ne perzistira se u bazi.
+        [NotMapped]
+        public string AlarmStatus
+        {
+            get { return alarmStatus; }
+            set { alarmStatus = value; OnPropertyChanged("AlarmStatus"); }
+        }
 
 
         #region Properties

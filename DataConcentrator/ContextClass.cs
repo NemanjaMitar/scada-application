@@ -7,6 +7,13 @@ namespace DataConcentrator
     {
         private static ContextClass instance;
 
+        static ContextClass()
+        {
+            // Baza se gradi iz modela (sve tabele) i seed-uje admin nalog.
+            // Rekreira se automatski ako se model promeni.
+            Database.SetInitializer(new ScadaDbInitializer());
+        }
+
         public static ContextClass Instance
         {
             get

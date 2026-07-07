@@ -6,59 +6,137 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:ScadaGUI"
         mc:Ignorable="d"
-        Title="SCADA Application" Height="450" Width="800"
+        Title="SCADA Application" Height="500" Width="960"
         Background="{DynamicResource MaterialDesignPaper}"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         Closing="Window_Closing">
     <Grid Margin="20">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <!-- Gornja traka sa dugmetom za temu -->
+            <!-- Lokalizacija: jezik / zona / format / sat -->
+            <RowDefinition Height="Auto"/>
+            <!-- Zvuk + tema -->
+            <RowDefinition Height="Auto"/>
+            <!-- Akciona dugmad -->
             <RowDefinition Height="*"/>
-            <!-- SCADA Sadržaj -->
+            <!-- Tabela tagova -->
         </Grid.RowDefinitions>
 
-        <!-- Gornji panel sa kontrolama -->
-        <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,0,20">
+        <!-- Lokalizacija -->
+        <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,0,10">
+            <TextBlock x:Name="LblLanguage" Text="Jezik:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+            <ComboBox x:Name="CbLanguage" Width="90" VerticalAlignment="Center" Margin="0,0,15,0"
+                      SelectionChanged="CbLanguage_SelectionChanged">
+                <ComboBoxItem Content="Srpski" Tag="sr"/>
+                <ComboBoxItem Content="English" Tag="en"/>
+            </ComboBox>
+
+            <TextBlock x:Name="LblTimezone" Text="Vrem. zona (UTC):" VerticalAlignment="Center" Margin="0,0,5,0"/>
+            <ComboBox x:Name="CbTimezone" Width="70" VerticalAlignment="Center" Margin="0,0,15,0"
+                      SelectionChanged="CbTimezone_SelectionChanged"/>
+
+            <TextBlock x:Name="LblDateFormat" Text="Format datuma:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+            <ComboBox x:Name="CbDateFormat" Width="150" VerticalAlignment="Center"
+                      SelectionChanged="CbDateFormat_SelectionChanged">
+                <ComboBoxItem Content="dd.MM.yyyy HH:mm:ss"/>
+                <ComboBoxItem Content="MM/dd/yyyy hh:mm:ss tt"/>
+                <ComboBoxItem Content="yyyy-MM-dd HH:mm:ss"/>
+            </ComboBox>
+        </StackPanel>
+
+        <!-- Zvuk + tema -->
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,0,15">
+            <TextBlock x:Name="LblClock" Text="Vreme:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+            <TextBlock x:Name="TxtClock" Text="-" VerticalAlignment="Center" FontWeight="Bold" Margin="0,0,20,0"/>
+
+            <!-- Izbor zvučnog signala alarma -->
+            <TextBlock x:Name="LblSound" Text="Zvuk:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+            <ComboBox x:Name="CbAlarmSound" Width="90" VerticalAlignment="Center" Margin="0,0,10,0"
+                      SelectionChanged="CbAlarmSound_SelectionChanged"/>
+
+            <!-- Jačina zvuka -->
+            <TextBlock x:Name="LblVolume" Text="Jačina:" VerticalAlignment="Center" Margin="0,0,5,0"/>
+            <Slider x:Name="SliderVolume" Width="90" Minimum="0" Maximum="100" Value="50"
+                    VerticalAlignment="Center" Margin="0,0,15,0"
+                    ValueChanged="SliderVolume_ValueChanged"/>
+
             <!-- Material Design dugme za promenu teme (Light/Dark) -->
-            <Button x:Name="BtnToggleTheme" 
-        Content="Promeni Temu (Light/Dark)" 
+            <Button x:Name="BtnToggleTheme"
+        Content="Promeni Temu (Light/Dark)"
         Click="BtnToggleTheme_Click"
         Background="{StaticResource YokogawaGrey}"
         BorderBrush="{StaticResource YokogawaGrey}"/>
         </StackPanel>
 
-        <!-- Primer SCADA UI elemenata (Yokogawa stil) -->
-        <StackPanel Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" Width="400">
-            <Button x:Name="BtnAddTag" 
-                        Content="DODAJ NOVI TAG" 
-                        Click="AddButton_Click" 
-                        Background="{StaticResource YokogawaGreen}" 
-                        BorderBrush="{StaticResource YokogawaGreen}"
-                        Foreground="Black" FontWeight="Bold" Height="45" Margin="0,0,0,20"/>
+        <!-- Akciona dugmad -->
+        <WrapPanel Grid.Row="2" Orientation="Horizontal" Margin="0,0,0,10">
+            <Button x:Name="BtnAddTag" Content="DODAJ NOVI TAG" Click="AddButton_Click"
+                    Background="{StaticResource YokogawaGreen}" BorderBrush="{StaticResource YokogawaGreen}"
+                    Foreground="Black" FontWeight="Bold" Height="36" MinWidth="150" Margin="0,0,8,8"/>
 
-            <!-- Simulacija alarma i stanja -->
-            <Border BorderBrush="{StaticResource YokogawaGrey}" BorderThickness="1" Padding="15" Background="#121212">
-                <StackPanel>
-                    <TextBlock Text="SISTEMSKIALARMI" FontSize="14" FontWeight="Bold" Foreground="{StaticResource YokogawaRed}" Margin="0,0,0,10"/>
+            <Button x:Name="BtnDeleteTag" Content="OBRIŠI TAG" Click="DeleteButton_Click"
+                    Background="{StaticResource YokogawaRed}" BorderBrush="{StaticResource YokogawaRed}"
+                    Foreground="White" FontWeight="Bold" Height="36" MinWidth="110" Margin="0,0,8,8"/>
 
-                    <Grid Margin="0,5">
-                        <TextBlock Text="Merenje Pritiska (AI_01):" HorizontalAlignment="Left" Foreground="{StaticResource YokogawaText}"/>
-                        <TextBlock Text="CRITICAL HIGH" HorizontalAlignment="Right" Foreground="{StaticResource YokogawaRed}" FontWeight="Bold"/>
-                    </Grid>
+            <Button x:Name="BtnDetails" Content="DETALJI (AI)" Click="DetailsButton_Click"
+                    Background="{StaticResource YokogawaGrey}" BorderBrush="{StaticResource YokogawaGrey}"
+                    Foreground="White" FontWeight="Bold" Height="36" MinWidth="110" Margin="0,0,8,8"/>
 
-                    <Grid Margin="0,5">
-                        <TextBlock Text="Protok Ventila (AO_02):" HorizontalAlignment="Left" Foreground="{StaticResource YokogawaText}"/>
-                        <TextBlock Text="75.4 %" HorizontalAlignment="Right" Foreground="{StaticResource YokogawaText}"/>
-                    </Grid>
+            <Button x:Name="BtnScanToggle" Content="SCAN ON/OFF" Click="ScanToggleButton_Click"
+                    Background="{StaticResource YokogawaGrey}" BorderBrush="{StaticResource YokogawaGrey}"
+                    Foreground="White" FontWeight="Bold" Height="36" MinWidth="120" Margin="0,0,8,8"/>
 
-                    <Grid Margin="0,5">
-                        <TextBlock Text="Glavni Motor (DI_01):" HorizontalAlignment="Left"  Foreground="{StaticResource YokogawaText}"/>
-                        <TextBlock Text="RUNNING" HorizontalAlignment="Right" Foreground="{StaticResource YokogawaGreen}" FontWeight="Bold"/>
-                    </Grid>
-                </StackPanel>
-            </Border>
-        </StackPanel>
+            <Button x:Name="BtnAck" Content="POTVRDI (ACK)" Click="AcknowledgeButton_Click"
+                    Background="{StaticResource YokogawaGrey}" BorderBrush="{StaticResource YokogawaGrey}"
+                    Foreground="White" FontWeight="Bold" Height="36" MinWidth="130" Margin="0,0,8,8"/>
+
+            <Button x:Name="BtnShowAlarms" Content="ALARMI" Click="ShowAlarmsButton_Click"
+                    Background="{StaticResource YokogawaGrey}" BorderBrush="{StaticResource YokogawaGrey}"
+                    Foreground="White" FontWeight="Bold" Height="36" MinWidth="90" Margin="0,0,8,8"/>
+
+            <Button x:Name="BtnReport" Content="REPORT" Click="ReportButton_Click"
+                    Background="{StaticResource YokogawaGrey}" BorderBrush="{StaticResource YokogawaGrey}"
+                    Foreground="White" FontWeight="Bold" Height="36" MinWidth="90" Margin="0,0,16,8"/>
+
+            <!-- Upis vrednosti u izlazni tag (AO/DO) -->
+            <TextBlock x:Name="LblWrite" Text="Vrednost:" VerticalAlignment="Center" Margin="0,0,5,8"/>
+            <TextBox x:Name="TxtWriteValue" Width="80" Height="30" VerticalContentAlignment="Center" Margin="0,0,6,8"/>
+            <Button x:Name="BtnWrite" Content="UPIŠI (AO/DO)" Click="WriteValueButton_Click"
+                    Background="{StaticResource YokogawaGreen}" BorderBrush="{StaticResource YokogawaGreen}"
+                    Foreground="Black" FontWeight="Bold" Height="36" MinWidth="120" Margin="0,0,0,8"/>
+        </WrapPanel>
+
+        <!-- Tabela svih tagova -->
+        <DataGrid x:Name="TagsDataGrid" Grid.Row="3"
+                  AutoGenerateColumns="False"
+                  IsReadOnly="True"
+                  SelectionMode="Single"
+                  CanUserAddRows="False">
+            <DataGrid.RowStyle>
+                <Style TargetType="DataGridRow">
+                    <Style.Triggers>
+                        <!-- Crveno = alarm aktivan i nije potvrđen -->
+                        <DataTrigger Binding="{Binding AlarmStatus}" Value="Active">
+                            <Setter Property="Background" Value="#E53935"/>
+                            <Setter Property="Foreground" Value="White"/>
+                        </DataTrigger>
+                        <!-- Žuto = alarm potvrđen (acknowledged) -->
+                        <DataTrigger Binding="{Binding AlarmStatus}" Value="Acknowledged">
+                            <Setter Property="Background" Value="#FDD835"/>
+                            <Setter Property="Foreground" Value="Black"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </DataGrid.RowStyle>
+            <DataGrid.Columns>
+                <DataGridTextColumn x:Name="ColName" Header="Ime" Binding="{Binding Name}" Width="*"/>
+                <DataGridTextColumn x:Name="ColType" Header="Tip" Binding="{Binding Type}" Width="Auto"/>
+                <DataGridTextColumn x:Name="ColAddress" Header="Adresa" Binding="{Binding Address}" Width="*"/>
+                <DataGridTextColumn x:Name="ColValue" Header="Vrednost" Binding="{Binding Value, StringFormat=N2}" Width="Auto"/>
+                <DataGridTextColumn x:Name="ColStatus" Header="Status Alarma" Binding="{Binding AlarmStatus}" Width="Auto"/>
+                <DataGridTextColumn x:Name="ColDescription" Header="Opis" Binding="{Binding Description}" Width="2*"/>
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 
 </Window>
